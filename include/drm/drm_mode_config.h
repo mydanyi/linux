@@ -709,6 +709,13 @@ struct drm_mode_config {
 	struct drm_property *prop_passive_vrr_disabled;
 
 	/**
+	 * @prop_low_latency_flip: Default atomic CRTC property to allow
+	 * flips during the vertical front porch to target the current
+	 * vblank.
+	 */
+	struct drm_property *prop_low_latency_flip;
+
+	/**
 	 * @dvi_i_subconnector_property: Optional DVI-I property to
 	 * differentiate between analog or digital mode.
 	 */

@@ -324,6 +324,8 @@ static int __drm_crtc_init_with_planes(struct drm_device *dev, struct drm_crtc *
 					   config->prop_vrr_enabled, 0);
 		drm_object_attach_property(&crtc->base,
 					   config->prop_passive_vrr_disabled, 0);
+		drm_object_attach_property(&crtc->base,
+					   config->prop_low_latency_flip, 0);
 	}
 
 	return 0;

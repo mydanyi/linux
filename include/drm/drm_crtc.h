@@ -321,6 +321,16 @@ struct drm_crtc_state {
 	bool passive_vrr_disabled;
 
 	/**
+	 * @low_latency_flip:
+	 *
+	 * When set, flips submitted during the vertical front porch
+	 * target the current vblank rather than being bumped to the
+	 * next one. Important for displays that use extended vertical
+	 * porch for sub-base refresh rates (e.g. OLED panels).
+	 */
+	bool low_latency_flip;
+
+	/**
 	 * @self_refresh_active:
 	 *
 	 * Used by the self refresh helpers to denote when a self refresh
