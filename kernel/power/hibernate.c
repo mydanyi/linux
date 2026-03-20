@@ -419,17 +419,17 @@ int hibernation_snapshot(int platform_mode)
 		 * successful freezer test.
 		 */
 		freezer_test_done = true;
-		goto Thaw;
+		goto ThawKThreads;
 	}
 
 	error = dpm_prepare(PMSG_FREEZE);
 	if (error)
-		goto Complete;
+		goto Thaw;
 
 	/* Preallocate image memory before shutting down devices. */
 	error = hibernate_preallocate_memory();
 	if (error)
-		goto Complete;
+		goto Thaw;
 
 	console_suspend_all();
 	pm_restrict_gfp_mask();
@@ -464,10 +464,11 @@ int hibernation_snapshot(int platform_mode)
 	platform_end(platform_mode);
 	return error;
 
- Complete:
-	dpm_complete(PMSG_RECOVER);
  Thaw:
+	dpm_complete(PMSG_RECOVER);
+ ThawKThreads:
 	thaw_kernel_threads();
+
 	goto Close;
 }
 
