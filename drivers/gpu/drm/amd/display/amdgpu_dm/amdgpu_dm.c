@@ -5215,7 +5215,7 @@ static int amdgpu_dm_mode_config_init(struct amdgpu_device *adev)
 	if (r)
 		return r;
 
-#ifdef CONFIG_DRM_AMD_COLOR_STEAMDECK
+#if 1 // enable private/steamdeck color API universally
 	if (amdgpu_dm_create_color_properties(adev))
 		return -ENOMEM;
 #endif
