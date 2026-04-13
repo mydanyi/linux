@@ -166,11 +166,20 @@ static const struct dmi_system_id dmi_table[] = {
 		.driver_data = &gpd_wm2_drvdata,
 	},
 	{
-		// GPD Win 4 with Ryzen 7840U (another)
+		// GPD Win 4 with Ryzen 7840U
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "GPD"),
 			DMI_MATCH(DMI_PRODUCT_NAME, "G1618-04"),
 			DMI_MATCH(DMI_BOARD_VERSION, "Ver.1.0"),
+		},
+		.driver_data = &gpd_wm2_drvdata,
+	},
+	{
+		// GPD Win 4 with Ryzen 8840U
+		.matches = {
+			DMI_MATCH(DMI_SYS_VENDOR, "GPD"),
+			DMI_MATCH(DMI_PRODUCT_NAME, "G1618-04"),
+			DMI_MATCH(DMI_BOARD_VERSION, "Version 1.0"),
 		},
 		.driver_data = &gpd_wm2_drvdata,
 	},
