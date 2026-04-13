@@ -1368,7 +1368,7 @@ static int bmi270_int_pin_config(struct bmi270_data *data,
 }
 
 static int bmi270_trigger_probe(struct bmi270_data *data,
-				struct iio_dev *indio_dev)
+				struct iio_dev *indio_dev, int dev_irq)
 {
 	bool open_drain, active_high, latch;
 	struct fwnode_handle *fwnode;
@@ -1384,10 +1384,14 @@ static int bmi270_trigger_probe(struct bmi270_data *data,
 		irq_pin = BMI270_IRQ_INT1;
 	} else {
 		irq = fwnode_irq_get_byname(fwnode, "INT2");
-		if (irq < 0)
+		if (irq > 0) {
+			irq_pin = BMI270_IRQ_INT2;
+		} else if (dev_irq > 0) {
+			irq = dev_irq;
+			irq_pin = BMI270_IRQ_INT1;
+		} else {
 			return 0;
-
-		irq_pin = BMI270_IRQ_INT2;
+		}
 	}
 
 	irq_type = irq_get_trigger_type(irq);
@@ -1597,7 +1601,7 @@ static int bmi270_chip_init(struct bmi270_data *data)
 }
 
 int bmi270_core_probe(struct device *dev, struct regmap *regmap,
-		      const struct bmi270_chip_info *chip_info)
+		      int irq, const struct bmi270_chip_info *chip_info)
 {
 	int ret;
 	struct bmi270_data *data;
@@ -1626,7 +1630,7 @@ int bmi270_core_probe(struct device *dev, struct regmap *regmap,
 	indio_dev->info = &bmi270_info;
 	dev_set_drvdata(data->dev, indio_dev);
 
-	ret = bmi270_trigger_probe(data, indio_dev);
+	ret = bmi270_trigger_probe(data, indio_dev, irq);
 	if (ret)
 		return ret;
 

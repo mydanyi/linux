@@ -18,7 +18,7 @@ extern const struct bmi270_chip_info bmi270_chip_info;
 
 struct device;
 int bmi270_core_probe(struct device *dev, struct regmap *regmap,
-		      const struct bmi270_chip_info *chip_info);
+		      int irq, const struct bmi270_chip_info *chip_info);
 
 extern const struct dev_pm_ops bmi270_core_pm_ops;
 

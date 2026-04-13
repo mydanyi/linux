@@ -61,7 +61,7 @@ static int bmi270_spi_probe(struct spi_device *spi)
 		return dev_err_probe(dev, PTR_ERR(regmap),
 				     "Failed to init spi regmap\n");
 
-	return bmi270_core_probe(dev, regmap, chip_info);
+	return bmi270_core_probe(dev, regmap, spi->irq, chip_info);
 }
 
 static const struct spi_device_id bmi270_spi_id[] = {

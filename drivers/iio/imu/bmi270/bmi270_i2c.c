@@ -28,7 +28,7 @@ static int bmi270_i2c_probe(struct i2c_client *client)
 		return dev_err_probe(dev, PTR_ERR(regmap),
 				     "Failed to init i2c regmap");
 
-	return bmi270_core_probe(dev, regmap, chip_info);
+	return bmi270_core_probe(dev, regmap, client->irq, chip_info);
 }
 
 static const struct i2c_device_id bmi270_i2c_id[] = {
