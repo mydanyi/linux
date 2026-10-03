@@ -4265,13 +4265,19 @@ static void alc269_fixup_match_via_dmi(struct hda_codec *codec,
 	int alc269_fix_id;
 	const char *board_name = dmi_get_system_info(DMI_BOARD_NAME);
 
+	if (!board_name)
+		return;
+
 	if (dmi_name_in_vendors("AYANEO") || dmi_name_in_vendors("AYADEVICE") || dmi_name_in_vendors("AYA DEVICE")) {
-		if (board_name && (strcmp(board_name, "AYANEO 2") || strcmp(board_name, "AYANEO 2S") || strcmp(board_name, "GEEK") || strcmp(board_name, "GEEK 1S"))) {
+		if (!strcmp(board_name, "AYANEO 2") ||
+		    !strcmp(board_name, "AYANEO 2S") ||
+		    !strcmp(board_name, "GEEK") ||
+		    !strcmp(board_name, "GEEK 1S")) {
 			alc269_fix_id = ALC269_FIXUP_AYA_HEADSET_VOLUME;
 		} else {
 			return;
 		}
-	} else if (dmi_name_in_vendors("ayn") && strcmp(board_name, "Loki MiniPro")) {
+	} else if (dmi_name_in_vendors("ayn") && !strcmp(board_name, "Loki MiniPro")) {
 		alc269_fix_id = ALC269VB_FIXUP_AYANEO_SPKR_PIN_FIX;
 	} else {
 		return;
