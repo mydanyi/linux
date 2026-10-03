@@ -36,11 +36,18 @@ static int asus_rog_2023_ally_fix(struct cs35l41_hda *cs35l41, struct device *ph
 				const char *hid)
 {
 	const char *rog_ally_bios_ver = dmi_get_system_info(DMI_BIOS_VERSION);
-	const char *rog_ally_bios_num = rog_ally_bios_ver + 6; // Dropping the RC71L. part before the number
+	const char *rog_ally_bios_num;
 	int rog_ally_bios_int, err;
-	
+
+	if (!rog_ally_bios_ver || strncmp(rog_ally_bios_ver, "RC71L.", 6))
+		return -ENOENT;
+
+	rog_ally_bios_num = rog_ally_bios_ver + 6;
 	err = kstrtoint(rog_ally_bios_num, 10, &rog_ally_bios_int);
-	if(err || rog_ally_bios_int >= 330){
+	if (err)
+		return -ENOENT;
+
+	if (rog_ally_bios_int >= 330) {
 		printk(KERN_INFO "DSD properties exist in the %d BIOS. Not applying DSD override...\n", rog_ally_bios_int);
 		return -ENOENT; //Patch not applicable. Exiting...
 	}
