@@ -224,13 +224,13 @@ static const struct dmi_system_id orientation_data[] = {
 	}, {	/* AYA NEO 2021 */
 		.matches = {
 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYADEVICE"),
-		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "AYA NEO 2021"),
+		  DMI_MATCH(DMI_PRODUCT_NAME, "AYA NEO"),
 		},
 		.driver_data = (void *)&lcd800x1280_rightside_up,
-	}, {	/* AYA NEO 2021 */
+	}, {	/* AYA NEO 2021 series (alternate vendor id) */
 		.matches = {
 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
-		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "NEO 2021"),
+		  DMI_MATCH(DMI_PRODUCT_NAME, "NEO 2021"),
 		},
 		.driver_data = (void *)&lcd800x1280_rightside_up,
 	}, {	/* AYA NEO AIR */
